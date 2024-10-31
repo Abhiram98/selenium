@@ -39,6 +39,11 @@ public class DriverFinder {
   private final Capabilities options;
   private final SeleniumManager seleniumManager;
   private boolean offline;
+
+  public Result getResult() {
+    return result;
+  }
+
   private Result result;
 
   public DriverFinder(DriverService service, Capabilities options) {
@@ -83,11 +88,6 @@ public class DriverFinder {
       LOG.log(Level.WARNING, "failed to discover driver path", e);
       return false;
     }
-  }
-
-  public boolean hasBrowserPath() {
-    String browserPath = result.getBrowserPath();
-    return browserPath != null && !browserPath.isEmpty();
   }
 
   private Result getBinaryPaths() {

@@ -139,11 +139,16 @@ public class FirefoxDriver extends RemoteWebDriver
     Require.nonNull("Driver clientConfig", clientConfig);
     DriverFinder finder = new DriverFinder(service, options);
     service.setExecutable(finder.getDriverPath());
-    if (finder.hasBrowserPath()) {
+    if (new FirefoxDriver().isHasBrowserPath(finder)) {
       options.setBinary(finder.getBrowserPath());
       options.setCapability("browserVersion", (Object) null);
     }
     return new FirefoxDriverCommandExecutor(service, clientConfig);
+  }
+
+  private boolean isHasBrowserPath(DriverFinder finder) {
+    String browserPath = finder.getResult().getBrowserPath();
+    return browserPath != null && !browserPath.isEmpty();
   }
 
   private FirefoxDriver(FirefoxDriverCommandExecutor executor, FirefoxOptions options) {

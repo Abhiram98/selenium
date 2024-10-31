@@ -69,11 +69,16 @@ public class EdgeDriver extends ChromiumDriver {
     Require.nonNull("Driver clientConfig", clientConfig);
     DriverFinder finder = new DriverFinder(service, options);
     service.setExecutable(finder.getDriverPath());
-    if (finder.hasBrowserPath()) {
+    if (new EdgeDriver().hasBrowserPath(finder)) {
       options.setBinary(finder.getBrowserPath());
       options.setCapability("browserVersion", (Object) null);
     }
     return new EdgeDriverCommandExecutor(service, clientConfig);
+  }
+
+  private boolean hasBrowserPath(DriverFinder finder) {
+    String browserPath = finder.getResult().getBrowserPath();
+    return browserPath != null && !browserPath.isEmpty();
   }
 
   @Beta

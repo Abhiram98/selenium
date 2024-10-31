@@ -131,7 +131,7 @@ public class DriverServiceSessionFactory implements SessionFactory {
       DriverService service = builder.build();
       DriverFinder finder = new DriverFinder(service, capabilities);
       service.setExecutable(finder.getDriverPath());
-      if (finder.hasBrowserPath()) {
+      if (hasBrowserPath(finder)) {
         capabilities = setBrowserBinary(capabilities, finder.getBrowserPath());
       }
 
@@ -234,6 +234,11 @@ public class DriverServiceSessionFactory implements SessionFactory {
     } finally {
       span.close();
     }
+  }
+
+  private boolean hasBrowserPath(DriverFinder finder) {
+    String browserPath = finder.getResult().getBrowserPath();
+    return browserPath != null && !browserPath.isEmpty();
   }
 
   private Capabilities readDevToolsEndpointAndVersion(Capabilities caps) {
