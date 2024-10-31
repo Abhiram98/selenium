@@ -36,7 +36,7 @@ class BiDiSessionCleanUpTest {
   void shouldNotCloseBiDiSessionIfOneWindowIsClosed() {
     FirefoxOptions options = (FirefoxOptions) Browser.FIREFOX.getCapabilities();
     // Enable BiDi
-    options.enableBiDi();
+    enableBiDi(options);
 
     driver = new FirefoxDriver(options);
 
@@ -64,7 +64,7 @@ class BiDiSessionCleanUpTest {
   void shouldCloseBiDiSessionIfLastWindowIsClosed() {
     FirefoxOptions options = (FirefoxOptions) Browser.FIREFOX.getCapabilities();
     // Enable BiDi
-    options.enableBiDi();
+    enableBiDi(options);
 
     driver = new FirefoxDriver(options);
 
@@ -84,5 +84,10 @@ class BiDiSessionCleanUpTest {
                 biDi.send(
                     new Command<>(
                         "session.status", Collections.emptyMap(), BiDiSessionStatus.class)));
+  }
+
+  private FirefoxOptions enableBiDi(FirefoxOptions options) {
+    options.setCapability("webSocketUrl", true);
+    return options;
   }
 }

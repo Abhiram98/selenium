@@ -129,8 +129,13 @@ public enum Browser {
         options.addArguments("-headless");
       }
 
-      options.enableBiDi();
+      enableBiDi(options);
 
+      return options;
+    }
+
+    private FirefoxOptions enableBiDi(FirefoxOptions options) {
+      options.setCapability("webSocketUrl", true);
       return options;
     }
   },
